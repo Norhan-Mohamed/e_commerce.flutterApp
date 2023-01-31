@@ -21,10 +21,10 @@ class ListsData {
 }
 */
 class Lists {
-  late String searchTerm;
-  late String categoryName;
-  late int itemCount;
-  late String redirectUrl;
+  late String? searchTerm;
+  late String? categoryName;
+  late int? itemCount;
+  late String? redirectUrl;
   late List<Product> products;
 
   Lists({
@@ -37,12 +37,16 @@ class Lists {
 
   Lists.fromMap(Map<String, dynamic> map) {
     this.searchTerm = map['searchTerm'];
+    print('01');
     this.categoryName = map['categoryName'];
     this.itemCount = map['itemCount'];
+    print('02');
     this.redirectUrl = map['redirectUrl'];
-    this.products = map['products'];
-    (map['products'] as List<Product>).forEach((element) {
-      this.products!.add(element); ///////
+    print('04');
+    this.products = [];
+    (map['products'] as List).forEach((element) {
+      this.products.add(Product.fromMap(element));
+      print('03');
     });
   }
   Map<String, dynamic> toMap() {

@@ -6,8 +6,8 @@ import '../../network/favDatabase.dart';
 import '../details/details.dart';
 
 class FavouriteScreen extends StatefulWidget {
-  late String category;
-  FavouriteScreen(this.category);
+  //late int category;
+  // FavouriteScreen(this.category);
   State<FavouriteScreen> createState() => FavouriteScreenState();
 }
 
@@ -49,29 +49,31 @@ class FavouriteScreenState extends State<FavouriteScreen> {
                                 IconButton(
                                   iconSize: 100,
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
                                             builder: (context) => DetailsScreen(
-                                                snapshot.data![index].id,
-                                                snapshot.data![index].imageUrl,
-                                                snapshot.data![index].name,
-                                                snapshot.data![index].price,
-                                                snapshot
-                                                    .data![index].productType,
-                                                snapshot.data![index].brandName,
-                                                snapshot
-                                                    .data![index].colourWayId,
-                                                snapshot.data![index].url,
-                                                snapshot.data![index].colour,
-                                                snapshot
-                                                    .data![index].productCode,
-                                                snapshot
-                                                    .data![index].isSellingFast,
-                                                snapshot.data![index]
-                                                    .hasVariantColours,
-                                                snapshot.data![index]
-                                                    .hasMultiplePrices,
-                                                widget.category)));
+                                                  snapshot.data![index].id,
+                                                  snapshot
+                                                      .data![index].imageUrl,
+                                                  snapshot.data![index].name,
+                                                  // snapshot.data![index].price,
+                                                  snapshot
+                                                      .data![index].productType,
+                                                  snapshot
+                                                      .data![index].brandName,
+                                                  snapshot
+                                                      .data![index].colourWayId,
+                                                  snapshot.data![index].url,
+                                                  snapshot.data![index].colour,
+                                                  snapshot
+                                                      .data![index].productCode,
+                                                  snapshot.data![index]
+                                                      .isSellingFast,
+                                                  snapshot.data![index]
+                                                      .hasVariantColours,
+                                                  snapshot.data![index]
+                                                      .hasMultiplePrices,
+                                                )));
                                   },
                                   icon: Container(
                                     decoration: BoxDecoration(

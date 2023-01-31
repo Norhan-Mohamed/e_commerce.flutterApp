@@ -1,4 +1,3 @@
-import 'package:e_commerce/api/price.dart';
 import 'package:e_commerce/api/products.dart';
 import 'package:e_commerce/screens/constant.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +6,10 @@ import '../../network/cartDatabase.dart';
 import '../details/details.dart';
 
 class CartScreen extends StatefulWidget {
-  late String category;
+  // late int category;
   CartScreen(
-    this.category,
-  );
+      // this.category,
+      );
   State<CartScreen> createState() => CartScreenState();
 }
 
@@ -52,32 +51,34 @@ class CartScreenState extends State<CartScreen> {
                                 IconButton(
                                   iconSize: 100,
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
                                             builder: (context) => DetailsScreen(
-                                                snapshot.data![index].id,
-                                                snapshot.data![index].imageUrl,
-                                                snapshot.data![index].name,
-                                                snapshot
-                                                    .data![index]
-                                                    .price[index]
-                                                    .currency as List<Price>,
-                                                snapshot
-                                                    .data![index].productType,
-                                                snapshot.data![index].brandName,
-                                                snapshot
-                                                    .data![index].colourWayId,
-                                                snapshot.data![index].url,
-                                                snapshot.data![index].colour,
-                                                snapshot
-                                                    .data![index].productCode,
-                                                snapshot
-                                                    .data![index].isSellingFast,
-                                                snapshot.data![index]
-                                                    .hasVariantColours,
-                                                snapshot.data![index]
-                                                    .hasMultiplePrices,
-                                                widget.category)));
+                                                  snapshot.data![index].id,
+                                                  snapshot
+                                                      .data![index].imageUrl,
+                                                  snapshot.data![index].name,
+                                                  /* snapshot
+                                                      .data![index]
+                                                      .price[index]
+                                                      .currency as List<Price>,*/
+                                                  snapshot
+                                                      .data![index].productType,
+                                                  snapshot
+                                                      .data![index].brandName,
+                                                  snapshot
+                                                      .data![index].colourWayId,
+                                                  snapshot.data![index].url,
+                                                  snapshot.data![index].colour,
+                                                  snapshot
+                                                      .data![index].productCode,
+                                                  snapshot.data![index]
+                                                      .isSellingFast,
+                                                  snapshot.data![index]
+                                                      .hasVariantColours,
+                                                  snapshot.data![index]
+                                                      .hasMultiplePrices,
+                                                )));
                                   },
                                   icon: Container(
                                     decoration: BoxDecoration(
@@ -124,7 +125,9 @@ class CartScreenState extends State<CartScreen> {
                                         fontSize: 15),
                                   ),
                                   Text(
-                                    snapshot.data![index].price[index].currency,
+                                    "price should be here",
+                                    //    snapshot.data![index].price[index].current
+                                    // .toString(),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     softWrap: false,

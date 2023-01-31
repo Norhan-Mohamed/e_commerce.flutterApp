@@ -6,12 +6,12 @@ import 'package:http/http.dart' as http;
 import 'lists.dart';
 
 class Api {
-  ApiData(String category) {
+  ApiData() {
     http.get(
         Uri.https("asos2.p.rapidapi.com", "/products/v2/list", {
           "store": 'US',
           "offset": '0',
-          "categoryId": '${category}',
+          "categoryId": '4208',
           "limit": '48',
           "country": 'US',
           "sort": 'freshness',
@@ -27,15 +27,13 @@ class Api {
       if (value.statusCode <= 299 && value.statusCode >= 200) {
         Map<String, dynamic> body = jsonDecode(value.body);
         print(body);
-        List<Lists> lists = Lists.fromMap(body) as List<Lists>;
+        Lists lists = Lists.fromMap(body);
         return lists;
       } else {
         throw ('failed' + value.body);
       }
     });
   }
-
-  // => print(value.body.toString()));
 }
 
 ApiDetails() {

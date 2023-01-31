@@ -1,5 +1,7 @@
 import 'package:e_commerce/screens/Home/home.dart';
+import 'package:e_commerce/screens/cart/cart.dart';
 import 'package:e_commerce/screens/constant.dart';
+import 'package:e_commerce/screens/favourite/favourite.dart';
 import 'package:e_commerce/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -28,8 +30,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Map<String, dynamic>> _pages = [
     {'page': Home(), 'title': 'Home'},
-    // {'page': CartScreen(), 'title': 'Cart'},
-    //{'page': FavouriteScreen(), 'title': 'Favourite'},
+    {'page': CartScreen(), 'title': 'Cart'},
+    {'page': FavouriteScreen(), 'title': 'Favourite'},
   ];
   int _selectedPageIndex = 0;
   Index(int index) {
