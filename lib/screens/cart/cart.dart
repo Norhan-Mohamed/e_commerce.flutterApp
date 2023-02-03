@@ -6,9 +6,9 @@ import '../../network/cartDatabase.dart';
 import '../details/details.dart';
 
 class CartScreen extends StatefulWidget {
-  // late int category;
+  //late var category;
   CartScreen(
-      // this.category,
+      //   this.category,
       );
   State<CartScreen> createState() => CartScreenState();
 }
@@ -40,7 +40,7 @@ class CartScreenState extends State<CartScreen> {
                   scrollDirection: Axis.vertical,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    print(snapshot.data![index].imageUrl);
+                    print("http://" + snapshot.data![index].imageUrl);
                     return Flexible(
                       child: Container(
                           color: Constants.thirdColor,
@@ -58,10 +58,8 @@ class CartScreenState extends State<CartScreen> {
                                                   snapshot
                                                       .data![index].imageUrl,
                                                   snapshot.data![index].name,
-                                                  /* snapshot
-                                                      .data![index]
-                                                      .price[index]
-                                                      .currency as List<Price>,*/
+                                                  snapshot.data![index].price
+                                                      .current.text,
                                                   snapshot
                                                       .data![index].productType,
                                                   snapshot
@@ -78,6 +76,7 @@ class CartScreenState extends State<CartScreen> {
                                                       .hasVariantColours,
                                                   snapshot.data![index]
                                                       .hasMultiplePrices,
+                                                  //  widget.category
                                                 )));
                                   },
                                   icon: Container(
@@ -125,9 +124,7 @@ class CartScreenState extends State<CartScreen> {
                                         fontSize: 15),
                                   ),
                                   Text(
-                                    "price should be here",
-                                    //    snapshot.data![index].price[index].current
-                                    // .toString(),
+                                    snapshot.data![index].price.toString(),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     softWrap: false,

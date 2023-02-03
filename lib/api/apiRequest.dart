@@ -6,12 +6,12 @@ import 'package:http/http.dart' as http;
 import 'lists.dart';
 
 class Api {
-  ApiData() {
-    http.get(
+  Future<Lists> ApiData() async {
+    final response = await http.get(
         Uri.https("asos2.p.rapidapi.com", "/products/v2/list", {
           "store": 'US',
           "offset": '0',
-          "categoryId": '4208',
+          "categoryId": '4209',
           "limit": '48',
           "country": 'US',
           "sort": 'freshness',
@@ -23,16 +23,15 @@ class Api {
           'X-RapidAPI-Key':
               '91d5486736msh4da31749cd7f79ap1ec77ejsne9a732c8faea',
           'X-RapidAPI-Host': 'asos2.p.rapidapi.com',
-        }).then((value) {
-      if (value.statusCode <= 299 && value.statusCode >= 200) {
-        Map<String, dynamic> body = jsonDecode(value.body);
-        print(body);
-        Lists lists = Lists.fromMap(body);
-        return lists;
-      } else {
-        throw ('failed' + value.body);
-      }
-    });
+        });
+    if (response.statusCode <= 299 && response.statusCode >= 200) {
+      Map<String, dynamic> body = jsonDecode(response.body);
+      print(body);
+      Lists lists = Lists.fromMap(body);
+      return lists;
+    } else {
+      throw ('failed' + response.body);
+    }
   }
 }
 
@@ -52,7 +51,7 @@ ApiDetails() {
     if (value.statusCode <= 299 && value.statusCode >= 200) {
       Map<String, dynamic> body = jsonDecode(value.body);
       print(body);
-      List<Lists> lists = Lists.fromMap(body) as List<Lists>;
+      List lists = Lists.fromMap(body) as List<Lists>;
       return lists;
     } else {
       throw ('failed' + value.body);

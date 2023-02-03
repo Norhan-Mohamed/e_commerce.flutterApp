@@ -1,7 +1,9 @@
+import 'package:e_commerce/api/price.dart';
+
 class Product {
   late int id;
   late String name;
-  // late List<Price> price;
+  late Price price;
   late String colour;
   late int colourWayId;
   late String brandName;
@@ -16,7 +18,7 @@ class Product {
   Product({
     required this.id,
     required this.name,
-    //required this.price,
+    required this.price,
     required this.colour,
     required this.url,
     required this.brandName,
@@ -30,29 +32,19 @@ class Product {
   });
 
   Product.fromMap(Map<String, dynamic> map) {
-    print('05000');
     this.productType = map['productType'];
-    print('04000');
     this.id = map['id'];
-    print('03000');
     this.name = map['name'];
-    print('000002');
-    /* this.price = [];
-    (map['price'] as List).forEach((element) {
-      this.price.add(Price.fromMap(element));
-    });*/
-    print('00001');
+    price = Price.fromMap(map['price']);
     this.colour = map['colour'];
     this.url = map['url'];
     this.brandName = map['brandName'];
     this.colourWayId = map['colourWayId'];
     this.hasMultiplePrices = map['hasMultiplePrices'];
     this.hasVariantColours = map['hasVariantColours'];
-    print('00007');
     this.imageUrl = map['imageUrl'];
     this.isSellingFast = map['isSellingFast'];
     this.productCode = map['productCode'];
-    print('00008');
   }
   Map<String, dynamic> toMap() {
     /* List<Map> tmpPrice = [];
@@ -62,7 +54,7 @@ class Product {
     Map<String, dynamic> map = {
       "id": this.id,
       "name": this.name,
-      // "price ": tmpPrice,
+      "price ": this.price.toMap(),
       "colour": this.colour,
       "url": this.url,
       "brandName": this.brandName,

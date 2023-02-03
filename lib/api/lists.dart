@@ -37,16 +37,15 @@ class Lists {
 
   Lists.fromMap(Map<String, dynamic> map) {
     this.searchTerm = map['searchTerm'];
-    print('01');
+
     this.categoryName = map['categoryName'];
     this.itemCount = map['itemCount'];
-    print('02');
+
     this.redirectUrl = map['redirectUrl'];
-    print('04');
+
     this.products = [];
     (map['products'] as List).forEach((element) {
       this.products.add(Product.fromMap(element));
-      print('03');
     });
   }
   Map<String, dynamic> toMap() {

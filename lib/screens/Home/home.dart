@@ -1,10 +1,12 @@
 import 'package:e_commerce/api/apiRequest.dart';
 import 'package:e_commerce/api/lists.dart';
-import 'package:e_commerce/screens/cart/cart.dart';
+import 'package:e_commerce/api/products.dart';
 import 'package:e_commerce/screens/constant.dart';
 import 'package:e_commerce/screens/details/details.dart';
-import 'package:e_commerce/screens/favourite/favourite.dart';
 import 'package:flutter/material.dart';
+
+import '../../network/cartDatabase.dart';
+import '../../network/favDatabase.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,12 +15,24 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   int indexCategory = -1;
-  List indexList = [4208, 4209, 4210];
-  late String category;
-  Function()? function;
+  List indexList = [
+    4208,
+    4209,
+    4210,
+  ];
+  late int category;
+
+  /* void selectCategory(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed('Api', arguments: {'category': category});
+  }*/
+
   @override
   Widget build(BuildContext context) {
-    List categories = ["jeans", "shoes, Boots & Sneakers", "jewelery"];
+    List categories = [
+      "jeans",
+      "shoes, Boots & Sneakers",
+      "jewelery",
+    ];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -122,7 +136,7 @@ class HomeState extends State<Home> {
                       onTap: () {
                         setState(() {
                           indexCategory = indexList[index];
-                          category = categories[index];
+                          category = indexList[index];
                         });
                       },
                       child: Container(
@@ -157,169 +171,295 @@ class HomeState extends State<Home> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData)
                         return Container(
+                            height: 400,
                             child: GridView.builder(
-                          itemBuilder: (context, index) {
-                            void selectCategory(BuildContext ctx) {
-                              Navigator.of(ctx).pushNamed('details',
-                                  arguments: {
-                                    'id': snapshot.data!.products[index].id
-                                  });
-                            }
+                              itemCount: snapshot.data?.products.length,
+                              itemBuilder: (context, index) {
+                                void selectCategory(BuildContext ctx) {
+                                  Navigator.of(ctx).pushNamed('details',
+                                      arguments: {'category': category});
+                                }
 
-                            return InkWell(
-                                onTap: () => selectCategory(context),
-                                child: GestureDetector(
-                                  onTap: () => Navigator.of(context)
-                                      .push(MaterialPageRoute(
-                                    builder: (context) => DetailsScreen(
-                                      snapshot.data!.products[index].id,
-                                      snapshot.data!.products[index].imageUrl,
-                                      snapshot.data!.products[index].name,
-                                      // snapshot.data!.products[index]
-                                      //   .price[index].currency as List<Price>,
-                                      snapshot
-                                          .data!.products[index].productType,
-                                      snapshot.data!.products[index].brandName,
-                                      snapshot
-                                          .data!.products[index].colourWayId,
-                                      snapshot.data!.products[index].url,
-                                      snapshot.data!.products[index].colour,
-                                      snapshot
-                                          .data!.products[index].productCode,
-                                      snapshot
-                                          .data!.products[index].isSellingFast,
-                                      snapshot.data!.products[index]
-                                          .hasVariantColours,
-                                      snapshot.data!.products[index]
-                                          .hasMultiplePrices,
-                                    ),
-                                  )),
-                                  child: Hero(
-                                    tag: 'photo',
-                                    child: Container(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.17, //145,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                    snapshot
-                                                        .data!
-                                                        .products[index]
-                                                        .imageUrl,
-                                                  ),
-                                                  fit: BoxFit.contain),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            snapshot.data!.products[index].name,
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                            maxLines: 1,
-                                          ),
-                                          Row(
+                                return InkWell(
+                                    onTap: () => selectCategory(context),
+                                    child: GestureDetector(
+                                      onTap: () => Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => DetailsScreen(
+                                          snapshot.data!.products[index].id,
+                                          snapshot
+                                              .data!.products[index].imageUrl,
+                                          snapshot.data!.products[index].name,
+                                          snapshot.data!.products[index].price
+                                              .current.text,
+                                          snapshot.data!.products[index]
+                                              .productType,
+                                          snapshot
+                                              .data!.products[index].brandName,
+                                          snapshot.data!.products[index]
+                                              .colourWayId,
+                                          snapshot.data!.products[index].url,
+                                          snapshot.data!.products[index].colour,
+                                          snapshot.data!.products[index]
+                                              .productCode,
+                                          snapshot.data!.products[index]
+                                              .isSellingFast,
+                                          snapshot.data!.products[index]
+                                              .hasVariantColours,
+                                          snapshot.data!.products[index]
+                                              .hasMultiplePrices,
+                                        ),
+                                      )),
+                                      child: Hero(
+                                        tag: 'photo$index',
+                                        child: Container(
+                                          child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Column(
+                                              Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.17, //145,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          "http://" +
+                                                              snapshot
+                                                                  .data!
+                                                                  .products[
+                                                                      index]
+                                                                  .imageUrl),
+                                                      fit: BoxFit.contain),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                snapshot
+                                                    .data!.products[index].name,
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                maxLines: 1,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    '\$' +
+                                                  Column(
+                                                    children: [
+                                                      Text(
                                                         snapshot
                                                             .data!
                                                             .products[index]
-                                                            .brandName
-                                                            //.price[index]
-                                                            //.current
-                                                            .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.grey),
+                                                            .brandName,
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.grey),
+                                                      ),
+                                                      Text(
+                                                        snapshot
+                                                            .data!
+                                                            .products[index]
+                                                            .price
+                                                            .current
+                                                            .text,
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.grey),
+                                                      ),
+                                                    ],
                                                   ),
+                                                  Container(
+                                                    height: 35,
+                                                    width: 35,
+                                                    child: Center(
+                                                      child: IconButton(
+                                                        icon: Icon(
+                                                          Icons.favorite,
+                                                          size: 15,
+                                                          color: Colors.white,
+                                                        ),
+                                                        onPressed: () async {
+                                                          await FavDataProvider.instance.insert(Product(
+                                                              id: snapshot
+                                                                  .data!
+                                                                  .products[
+                                                                      index]
+                                                                  .id,
+                                                              name: snapshot
+                                                                  .data!
+                                                                  .products[
+                                                                      index]
+                                                                  .name,
+                                                              imageUrl: snapshot
+                                                                  .data!
+                                                                  .products[
+                                                                      index]
+                                                                  .imageUrl,
+                                                              colour: snapshot
+                                                                  .data!
+                                                                  .products[
+                                                                      index]
+                                                                  .colour,
+                                                              colourWayId: snapshot
+                                                                  .data!
+                                                                  .products[
+                                                                      index]
+                                                                  .colourWayId,
+                                                              brandName: snapshot
+                                                                  .data!
+                                                                  .products[
+                                                                      index]
+                                                                  .brandName,
+                                                              hasVariantColours: snapshot
+                                                                  .data!
+                                                                  .products[
+                                                                      index]
+                                                                  .hasVariantColours,
+                                                              hasMultiplePrices: snapshot
+                                                                  .data!
+                                                                  .products[
+                                                                      index]
+                                                                  .hasMultiplePrices,
+                                                              productCode: snapshot
+                                                                  .data!
+                                                                  .products[index]
+                                                                  .productCode,
+                                                              productType: snapshot.data!.products[index].productType,
+                                                              url: snapshot.data!.products[index].url,
+                                                              isSellingFast: snapshot.data!.products[index].isSellingFast,
+                                                              price: snapshot.data!.products[index].price));
+                                                        },
+                                                      ),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: Constants
+                                                          .primaryColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    height: 35,
+                                                    width: 35,
+                                                    child: Center(
+                                                      child: IconButton(
+                                                        icon: Icon(
+                                                          Icons.add,
+                                                          size: 15,
+                                                          color: Colors.white,
+                                                        ),
+                                                        onPressed: () async {
+                                                          await CartDataProvider
+                                                              .instance
+                                                              .insert(Product(
+                                                            id: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .id,
+                                                            name: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .name,
+                                                            imageUrl: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .imageUrl,
+                                                            colour: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .colour,
+                                                            colourWayId: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .colourWayId,
+                                                            brandName: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .brandName,
+                                                            hasVariantColours:
+                                                                snapshot
+                                                                    .data!
+                                                                    .products[
+                                                                        index]
+                                                                    .hasVariantColours,
+                                                            hasMultiplePrices:
+                                                                snapshot
+                                                                    .data!
+                                                                    .products[
+                                                                        index]
+                                                                    .hasMultiplePrices,
+                                                            productCode: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .productCode,
+                                                            productType: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .productType,
+                                                            url: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .url,
+                                                            isSellingFast: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .isSellingFast,
+                                                            price: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .price,
+                                                          ));
+                                                        },
+                                                      ),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: Constants
+                                                          .primaryColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                  )
                                                 ],
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.all(5),
-                                                child: IconButton(
-                                                  icon: Icon(
-                                                    Icons.favorite,
-                                                    size: 15,
-                                                    color: Colors.white,
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                FavouriteScreen()));
-                                                  },
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: Constants.primaryColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                ),
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.all(5),
-                                                child: IconButton(
-                                                  icon: Icon(
-                                                    Icons.add,
-                                                    size: 15,
-                                                    color: Colors.white,
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                CartScreen()));
-                                                  },
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: Constants.primaryColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                ),
                                               )
                                             ],
-                                          )
-                                        ],
+                                          ),
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: Constants.thirdColor,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                        ),
                                       ),
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        color: Constants.thirdColor,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                  ),
-                                ));
-                          },
-                          itemCount: snapshot.data?.products.length,
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200,
-                                  crossAxisSpacing: 20,
-                                  childAspectRatio: 3 / 4,
-                                  mainAxisSpacing: 20),
-                        ));
+                                    ));
+                              },
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 200,
+                                      crossAxisSpacing: 20,
+                                      childAspectRatio: 3 / 4,
+                                      mainAxisSpacing: 20),
+                            ));
                       if (snapshot.hasError) {
                         print(snapshot.error!);
                         return Container(

@@ -6,7 +6,7 @@ import '../../network/favDatabase.dart';
 import '../details/details.dart';
 
 class FavouriteScreen extends StatefulWidget {
-  //late int category;
+  //late var category;
   // FavouriteScreen(this.category);
   State<FavouriteScreen> createState() => FavouriteScreenState();
 }
@@ -55,8 +55,10 @@ class FavouriteScreenState extends State<FavouriteScreen> {
                                                   snapshot.data![index].id,
                                                   snapshot
                                                       .data![index].imageUrl,
+                                                  snapshot.data![index].price
+                                                      .current.text
+                                                      .toString(),
                                                   snapshot.data![index].name,
-                                                  // snapshot.data![index].price,
                                                   snapshot
                                                       .data![index].productType,
                                                   snapshot
@@ -73,6 +75,7 @@ class FavouriteScreenState extends State<FavouriteScreen> {
                                                       .hasVariantColours,
                                                   snapshot.data![index]
                                                       .hasMultiplePrices,
+                                                  // widget.category
                                                 )));
                                   },
                                   icon: Container(
@@ -80,7 +83,9 @@ class FavouriteScreenState extends State<FavouriteScreen> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15.0))),
                                     child: Image.network(
-                                      snapshot.data![index].imageUrl.toString(),
+                                      "http://" +
+                                          snapshot.data![index].imageUrl
+                                              .toString(),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
