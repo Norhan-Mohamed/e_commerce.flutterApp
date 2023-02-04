@@ -12,13 +12,13 @@ final String columnproductCode = 'productCode';
 final String columnproductType = 'productType';
 final String columnurl = 'url';
 final String columnprice = 'price';
-final String columnisSellingFast = ' isSellingFast ';
-final String columnhasVariantColours = ' hasVariantColours';
-final String columnhasMultiplePrices = ' hasMultiplePrices';
+//final String columnisSellingFast = ' isSellingFast ';
+//final String columnhasVariantColours = ' hasVariantColours';
+//final String columnhasMultiplePrices = ' hasMultiplePrices';
 final String columnvalue = 'value';
 final String columntext = 'text';
-final String columnisOutletPrice = 'isOutletPrice';
-final String columnisMarkedDown = 'isMarkedDown';
+//final String columnisOutletPrice = 'isOutletPrice';
+//final String columnisMarkedDown = 'isMarkedDown';
 final String columnCurrency = 'currency';
 /*
 class Providar {
@@ -116,13 +116,8 @@ $columnproductCode text,
 $columnproductType text ,
 $columnurl text ,
 $columnprice text ,
- $columnisSellingFast  integer ,
- $columnhasVariantColours integer ,
- $columnhasMultiplePrices integer,
 $columnvalue Real ,
 $columntext  text ,
-$columnisOutletPrice integer,
-$columnisMarkedDown integer,
 $columnCurrency  text 
 
   
