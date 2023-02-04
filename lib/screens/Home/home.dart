@@ -204,10 +204,10 @@ class HomeState extends State<Home> {
                                               .productCode,
                                           snapshot.data!.products[index]
                                               .isSellingFast,
-                                          snapshot.data!.products[index]
+                                          /* snapshot.data!.products[index]
                                               .hasVariantColours,
                                           snapshot.data!.products[index]
-                                              .hasMultiplePrices,
+                                              .hasMultiplePrices,*/
                                         ),
                                       )),
                                       child: Hero(
@@ -296,38 +296,40 @@ class HomeState extends State<Home> {
                                                           color: Colors.white,
                                                         ),
                                                         onPressed: () async {
-                                                          await FavDataProvider.instance.insert(Product(
-                                                              id: snapshot
-                                                                  .data!
-                                                                  .products[
-                                                                      index]
-                                                                  .id,
-                                                              name: snapshot
-                                                                  .data!
-                                                                  .products[
-                                                                      index]
-                                                                  .name,
-                                                              imageUrl: snapshot
-                                                                  .data!
-                                                                  .products[
-                                                                      index]
-                                                                  .imageUrl,
-                                                              colour: snapshot
-                                                                  .data!
-                                                                  .products[
-                                                                      index]
-                                                                  .colour,
-                                                              colourWayId: snapshot
-                                                                  .data!
-                                                                  .products[
-                                                                      index]
-                                                                  .colourWayId,
-                                                              brandName: snapshot
-                                                                  .data!
-                                                                  .products[
-                                                                      index]
-                                                                  .brandName,
-                                                              hasVariantColours: snapshot
+                                                          await FavDataProvider
+                                                              .instance
+                                                              .insert(Product(
+                                                                  id: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .id,
+                                                                  name: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .name,
+                                                                  imageUrl: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .imageUrl,
+                                                                  colour: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .colour,
+                                                                  colourWayId: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .colourWayId,
+                                                                  brandName: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .brandName,
+                                                                  /* hasVariantColours: snapshot
                                                                   .data!
                                                                   .products[
                                                                       index]
@@ -336,15 +338,31 @@ class HomeState extends State<Home> {
                                                                   .data!
                                                                   .products[
                                                                       index]
-                                                                  .hasMultiplePrices,
-                                                              productCode: snapshot
-                                                                  .data!
-                                                                  .products[index]
-                                                                  .productCode,
-                                                              productType: snapshot.data!.products[index].productType,
-                                                              url: snapshot.data!.products[index].url,
-                                                              isSellingFast: snapshot.data!.products[index].isSellingFast,
-                                                              price: snapshot.data!.products[index].price));
+                                                                  .hasMultiplePrices,*/
+                                                                  productCode: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .productCode,
+                                                                  productType: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .productType,
+                                                                  url: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .url,
+                                                                  isSellingFast: snapshot
+                                                                      .data!
+                                                                      .products[
+                                                                          index]
+                                                                      .isSellingFast,
+                                                                  price: snapshot
+                                                                      .data!
+                                                                      .products[index]
+                                                                      .price));
                                                         },
                                                       ),
                                                     ),
@@ -394,7 +412,7 @@ class HomeState extends State<Home> {
                                                                 .data!
                                                                 .products[index]
                                                                 .brandName,
-                                                            hasVariantColours:
+                                                            /*  hasVariantColours:
                                                                 snapshot
                                                                     .data!
                                                                     .products[
@@ -405,7 +423,7 @@ class HomeState extends State<Home> {
                                                                     .data!
                                                                     .products[
                                                                         index]
-                                                                    .hasMultiplePrices,
+                                                                    .hasMultiplePrices,*/
                                                             productCode: snapshot
                                                                 .data!
                                                                 .products[index]

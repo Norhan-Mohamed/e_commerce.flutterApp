@@ -20,7 +20,7 @@ final String columntext = 'text';
 final String columnisOutletPrice = 'isOutletPrice';
 final String columnisMarkedDown = 'isMarkedDown';
 final String columnCurrency = 'currency';
-
+/*
 class Providar {
   late String id;
   late String name;
@@ -90,7 +90,7 @@ class Providar {
     isMarkedDown = map[columnisMarkedDown] == 1;
     Currency = map[columnCurrency];
   }
-}
+}*/
 
 class CartDataProvider {
   late Database db;
@@ -107,23 +107,23 @@ class CartDataProvider {
       await db.execute('''
 create table ProductTable ( 
   $columnid integer ,
-  $columnname text not null,
-  $columnimageUrl text not null,
-  $columncolour text not null,
-  $columncolourWayId text not null,
-$columnbrandName text not null,
-$columnproductCode text not null,
-$columnproductType text not null,
-$columnurl text not null,
-$columnprice text not null,
- $columnisSellingFast  integer not null,
- $columnhasVariantColours integer not null,
- $columnhasMultiplePrices integer not null,
-$columnvalue Real not null,
-$columntext  text not null,
+  $columnname text ,
+  $columnimageUrl text ,
+  $columncolour text ,
+  $columncolourWayId text ,
+$columnbrandName text ,
+$columnproductCode text,
+$columnproductType text ,
+$columnurl text ,
+$columnprice text ,
+ $columnisSellingFast  integer ,
+ $columnhasVariantColours integer ,
+ $columnhasMultiplePrices integer,
+$columnvalue Real ,
+$columntext  text ,
 $columnisOutletPrice integer,
 $columnisMarkedDown integer,
-$columnCurrency  text not null
+$columnCurrency  text 
 
   
   )

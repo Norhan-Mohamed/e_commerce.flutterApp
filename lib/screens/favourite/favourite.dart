@@ -71,10 +71,10 @@ class FavouriteScreenState extends State<FavouriteScreen> {
                                                       .data![index].productCode,
                                                   snapshot.data![index]
                                                       .isSellingFast,
-                                                  snapshot.data![index]
+                                                  /* snapshot.data![index]
                                                       .hasVariantColours,
                                                   snapshot.data![index]
-                                                      .hasMultiplePrices,
+                                                      .hasMultiplePrices,*/
                                                   // widget.category
                                                 )));
                                   },

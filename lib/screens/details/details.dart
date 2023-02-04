@@ -12,8 +12,8 @@ class DetailsScreen extends StatefulWidget {
   late String colour;
   late int colourWayId;
   late String brandName;
-  late bool hasVariantColours;
-  late bool hasMultiplePrices;
+  // late bool hasVariantColours;
+  // late bool hasMultiplePrices;
   late int productCode;
   late String productType;
   late String url;
@@ -32,8 +32,8 @@ class DetailsScreen extends StatefulWidget {
     this.colour,
     this.productCode,
     this.isSellingFast,
-    this.hasVariantColours,
-    this.hasMultiplePrices,
+    // this.hasVariantColours,
+    // this.hasMultiplePrices,
     //   this.category
   );
 
@@ -258,13 +258,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                Text(
+                                /* Text(
                                   widget.hasVariantColours.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                   ),
-                                ),
+                                ),*/
                               ],
                             ),
                             SizedBox(
@@ -279,13 +279,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                Text(
+                                /*Text(
                                   widget.hasMultiplePrices.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                   ),
-                                )
+                                )*/
                               ],
                             ),
                             Divider(
