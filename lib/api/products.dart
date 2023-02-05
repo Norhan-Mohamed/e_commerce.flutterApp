@@ -7,8 +7,8 @@ class Product {
   late String colour;
   late int colourWayId;
   late String brandName;
-  // late bool hasVariantColours;
-  // late bool hasMultiplePrices;
+  late bool hasVariantColours;
+  late bool hasMultiplePrices;
   late int productCode;
   late String productType;
   late String url;
@@ -23,8 +23,8 @@ class Product {
     required this.url,
     required this.brandName,
     required this.colourWayId,
-    //  required this.hasMultiplePrices,
-    //required this.hasVariantColours,
+    required this.hasMultiplePrices,
+    required this.hasVariantColours,
     required this.imageUrl,
     required this.isSellingFast,
     required this.productCode,
@@ -40,8 +40,8 @@ class Product {
     this.url = map['url'];
     this.brandName = map['brandName'];
     this.colourWayId = map['colourWayId'];
-    // this.hasMultiplePrices = map['hasMultiplePrices'];
-    // this.hasVariantColours = map['hasVariantColours'];
+    this.hasMultiplePrices = map['hasMultiplePrices'];
+    this.hasVariantColours = map['hasVariantColours'];
     this.imageUrl = map['imageUrl'];
     this.isSellingFast = map['isSellingFast'];
     this.productCode = map['productCode'];
@@ -55,8 +55,8 @@ class Product {
       "url": this.url,
       "brandName": this.brandName,
       "colourWayId": this.colourWayId,
-      //"hasMultiplePrices": this.hasMultiplePrices,
-      //"hasVariantColours": this.hasVariantColours,
+      "hasMultiplePrices": this.hasMultiplePrices,
+      "hasVariantColours": this.hasVariantColours,
       "imageUrl": this.imageUrl,
       "isSellingFast": this.isSellingFast,
       "productCode": this.productCode,

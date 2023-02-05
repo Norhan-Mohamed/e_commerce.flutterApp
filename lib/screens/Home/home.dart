@@ -1,11 +1,11 @@
 import 'package:e_commerce/api/apiRequest.dart';
 import 'package:e_commerce/api/lists.dart';
-import 'package:e_commerce/api/products.dart';
 import 'package:e_commerce/screens/constant.dart';
 import 'package:e_commerce/screens/details/details.dart';
 import 'package:flutter/material.dart';
 
 import '../../network/cartDatabase.dart';
+import '../../network/dataBaseModel.dart';
 import '../../network/favDatabase.dart';
 
 class Home extends StatefulWidget {
@@ -190,21 +190,20 @@ class HomeState extends State<Home> {
                                           snapshot
                                               .data!.products[index].imageUrl,
                                           snapshot.data!.products[index].name,
-                                          snapshot.data!.products[index].price
-                                              .current.text,
-                                          snapshot.data!.products[index]
-                                              .productType,
+                                          /* snapshot.data!.products[index].price
+                                              .current.text,*/
+                                          /* snapshot.data!.products[index]
+                                              .productType,*/
                                           snapshot
                                               .data!.products[index].brandName,
                                           snapshot.data!.products[index]
                                               .colourWayId,
-                                          snapshot.data!.products[index].url,
                                           snapshot.data!.products[index].colour,
-                                          snapshot.data!.products[index]
+                                          /* snapshot.data!.products[index]
                                               .productCode,
                                           snapshot.data!.products[index]
                                               .isSellingFast,
-                                          /* snapshot.data!.products[index]
+                                           snapshot.data!.products[index]
                                               .hasVariantColours,
                                           snapshot.data!.products[index]
                                               .hasMultiplePrices,*/
@@ -298,96 +297,8 @@ class HomeState extends State<Home> {
                                                         onPressed: () async {
                                                           await FavDataProvider
                                                               .instance
-                                                              .insert(Product(
-                                                                  id: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .id,
-                                                                  name: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .name,
-                                                                  imageUrl: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .imageUrl,
-                                                                  colour: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .colour,
-                                                                  colourWayId: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .colourWayId,
-                                                                  brandName: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .brandName,
-                                                                  /* hasVariantColours: snapshot
-                                                                  .data!
-                                                                  .products[
-                                                                      index]
-                                                                  .hasVariantColours,
-                                                              hasMultiplePrices: snapshot
-                                                                  .data!
-                                                                  .products[
-                                                                      index]
-                                                                  .hasMultiplePrices,*/
-                                                                  productCode: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .productCode,
-                                                                  productType: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .productType,
-                                                                  url: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .url,
-                                                                  isSellingFast: snapshot
-                                                                      .data!
-                                                                      .products[
-                                                                          index]
-                                                                      .isSellingFast,
-                                                                  price: snapshot
-                                                                      .data!
-                                                                      .products[index]
-                                                                      .price));
-                                                        },
-                                                      ),
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      color: Constants
-                                                          .primaryColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    height: 35,
-                                                    width: 35,
-                                                    child: Center(
-                                                      child: IconButton(
-                                                        icon: Icon(
-                                                          Icons.add,
-                                                          size: 15,
-                                                          color: Colors.white,
-                                                        ),
-                                                        onPressed: () async {
-                                                          await CartDataProvider
-                                                              .instance
-                                                              .insert(Product(
+                                                              .insert(
+                                                                  DataBaseModel(
                                                             id: snapshot
                                                                 .data!
                                                                 .products[index]
@@ -412,39 +323,82 @@ class HomeState extends State<Home> {
                                                                 .data!
                                                                 .products[index]
                                                                 .brandName,
-                                                            /*  hasVariantColours:
-                                                                snapshot
-                                                                    .data!
-                                                                    .products[
-                                                                        index]
-                                                                    .hasVariantColours,
-                                                            hasMultiplePrices:
-                                                                snapshot
-                                                                    .data!
-                                                                    .products[
-                                                                        index]
-                                                                    .hasMultiplePrices,*/
-                                                            productCode: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .productCode,
-                                                            productType: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .productType,
-                                                            url: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .url,
-                                                            isSellingFast: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .isSellingFast,
-                                                            price: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .price,
                                                           ));
+                                                          /*  Navigator.of(context)
+                                                              .pushNamed(
+                                                                  'FavouriteScreen',
+                                                                  arguments: {
+                                                                'price': snapshot
+                                                                    .data!
+                                                                    .products[
+                                                                        index]
+                                                                    .price
+                                                                    .current
+                                                                    .text
+                                                              });*/
+                                                        },
+                                                      ),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: Constants
+                                                          .primaryColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    height: 35,
+                                                    width: 35,
+                                                    child: Center(
+                                                      child: IconButton(
+                                                        icon: Icon(
+                                                          Icons.add,
+                                                          size: 15,
+                                                          color: Colors.white,
+                                                        ),
+                                                        onPressed: () async {
+                                                          await CartDataProvider
+                                                              .instance
+                                                              .insert(
+                                                                  DataBaseModel(
+                                                            id: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .id,
+                                                            name: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .name,
+                                                            imageUrl: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .imageUrl,
+                                                            colour: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .colour,
+                                                            colourWayId: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .colourWayId,
+                                                            brandName: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .brandName,
+                                                          ));
+                                                          /* Navigator.of(context)
+                                                              .pushNamed(
+                                                                  'CartScreen',
+                                                                  arguments: {
+                                                                'price': snapshot
+                                                                    .data!
+                                                                    .products[
+                                                                        index]
+                                                                    .price
+                                                                    .current
+                                                                    .text
+                                                              });*/
                                                         },
                                                       ),
                                                     ),

@@ -1,4 +1,4 @@
-import 'package:e_commerce/api/products.dart';
+import 'package:e_commerce/network/dataBaseModel.dart';
 import 'package:e_commerce/screens/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -7,15 +7,14 @@ import '../details/details.dart';
 
 class CartScreen extends StatefulWidget {
   //late var category;
-  CartScreen(
-      //   this.category,
-      );
+
   State<CartScreen> createState() => CartScreenState();
 }
 
 class CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    // widget.price = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -29,7 +28,7 @@ class CartScreenState extends State<CartScreen> {
               fontSize: 30),
         ),
       ),
-      body: FutureBuilder<List<Product>>(
+      body: FutureBuilder<List<DataBaseModel>>(
           future: CartDataProvider.instance.getData(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
@@ -40,7 +39,7 @@ class CartScreenState extends State<CartScreen> {
                   scrollDirection: Axis.vertical,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    print("http://" + snapshot.data![index].imageUrl);
+                    print(snapshot.data![index].name);
                     return Flexible(
                       child: Container(
                           color: Constants.thirdColor,
@@ -58,38 +57,26 @@ class CartScreenState extends State<CartScreen> {
                                                   snapshot
                                                       .data![index].imageUrl,
                                                   snapshot.data![index].name,
-                                                  snapshot.data![index].price
-                                                      .current.text,
-                                                  snapshot
-                                                      .data![index].productType,
                                                   snapshot
                                                       .data![index].brandName,
                                                   snapshot
                                                       .data![index].colourWayId,
-                                                  snapshot.data![index].url,
+
                                                   snapshot.data![index].colour,
-                                                  snapshot
-                                                      .data![index].productCode,
-                                                  snapshot.data![index]
-                                                      .isSellingFast,
-                                                  /*  snapshot.data![index]
-                                                      .hasVariantColours,
-                                                  snapshot.data![index]
-                                                      .hasMultiplePrices,*/
                                                   //  widget.category
                                                 )));
                                   },
                                   icon: Container(
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15.0))),
                                     child: Image.network(
-                                      snapshot.data![index].imageUrl.toString(),
+                                      "http://${snapshot.data![index].imageUrl}",
                                       fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
                                 Column(children: [
@@ -98,7 +85,7 @@ class CartScreenState extends State<CartScreen> {
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     softWrap: false,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w400,
                                         fontSize: 15),
@@ -113,8 +100,8 @@ class CartScreenState extends State<CartScreen> {
                                         fontWeight: FontWeight.w400,
                                         fontSize: 15),
                                   ),
-                                  Text(
-                                    snapshot.data![index].productType,
+                                  /*  Text(
+                                    widget.price.toString(),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     softWrap: false,
@@ -122,17 +109,7 @@ class CartScreenState extends State<CartScreen> {
                                         color: Colors.black,
                                         fontWeight: FontWeight.w400,
                                         fontSize: 15),
-                                  ),
-                                  Text(
-                                    snapshot.data![index].price.toString(),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15),
-                                  )
+                                  )*/
                                 ]),
                                 SizedBox(
                                   width: 100,

@@ -5,35 +5,28 @@ import '../../api/lists.dart';
 import '../constant.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final int id;
-  final String name;
-  final String imageUrl;
-  final String price;
+  late int id;
+  late String name;
+  late String imageUrl;
+  // late String price;
   late String colour;
   late int colourWayId;
   late String brandName;
-  // late bool hasVariantColours;
+  //late bool hasVariantColours;
   // late bool hasMultiplePrices;
-  late int productCode;
-  late String productType;
-  late String url;
-  late bool isSellingFast;
+  // late bool isSellingFast;
   // var category;
 
   DetailsScreen(
     this.id,
     this.imageUrl,
     this.name,
-    this.price,
-    this.productType,
+    //this.price,
     this.brandName,
     this.colourWayId,
-    this.url,
     this.colour,
-    this.productCode,
-    this.isSellingFast,
-    // this.hasVariantColours,
-    // this.hasMultiplePrices,
+
+    // this.isSellingFast,
     //   this.category
   );
 
@@ -171,13 +164,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 SizedBox(
                                   width: 200,
                                 ),
-                                Text(
+                                /* Text(
                                   widget.price,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                   ),
-                                ),
+                                ),*/
                               ],
                             ),
                             Divider(
@@ -228,7 +221,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             SizedBox(
                               height: 5,
                             ),
-                            Row(
+                            /*  Row(
                               children: [
                                 Text(
                                   "is selling fast: ",
@@ -245,11 +238,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   ),
                                 ),
                               ],
-                            ),
+                            ),*/
                             SizedBox(
                               height: 5,
                             ),
-                            Row(
+                            /*  Row(
                               children: [
                                 Text(
                                   "has variant colours: ",
@@ -258,13 +251,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                /* Text(
+                                 Text(
                                   widget.hasVariantColours.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                   ),
-                                ),*/
+                                ),
                               ],
                             ),
                             SizedBox(
@@ -279,15 +272,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                /*Text(
+                                Text(
                                   widget.hasMultiplePrices.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                   ),
-                                )*/
+                                )
                               ],
-                            ),
+                            ),*/
                             Divider(
                               height: 20,
                               thickness: 1,
