@@ -9,6 +9,7 @@ final String columnimageUrl = 'imageUrl';
 final String columncolour = 'colour';
 final String columncolourWayId = 'colourWayId';
 final String columnbrandName = 'brandName';
+final String columnprice = 'price';
 
 class CartDataProvider {
   late Database db;
@@ -29,7 +30,8 @@ create table ProductTable (
   $columnimageUrl text ,
   $columncolour text ,
   $columncolourWayId text ,
-$columnbrandName text 
+$columnbrandName text ,
+$columnprice real
   
   )
 ''');
@@ -55,8 +57,9 @@ $columnbrandName text
     return dataBaseModel;
   }
 
-  Future<int> delete(int? id) async {
-    return await db.delete('ProductTable', where: '$id = ?', whereArgs: [id]);
+  Future<int> delete(int id) async {
+    return await db
+        .delete('ProductTable', where: '$columnid = ?', whereArgs: [id]);
   }
 
   Future close() async => db.close();

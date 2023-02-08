@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import '../../network/cartDatabase.dart';
 import '../../network/dataBaseModel.dart';
-import '../../network/favDatabase.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,16 +14,10 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   int indexCategory = -1;
-  List indexList = [
-    4208,
-    4209,
-    4210,
-  ];
-  late int category;
-
-  /* void selectCategory(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed('Api', arguments: {'category': category});
-  }*/
+  List indexList = [0, 1, 2, 3];
+  List categoriesId = [4208, 4209, 4210, 3136];
+  late String category = '';
+  int initial = 4208;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +25,7 @@ class HomeState extends State<Home> {
       "jeans",
       "shoes, Boots & Sneakers",
       "jewelery",
+      "shirts",
     ];
     return Scaffold(
       backgroundColor: Colors.white,
@@ -47,7 +41,7 @@ class HomeState extends State<Home> {
             children: [
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Find ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -65,7 +59,7 @@ class HomeState extends State<Home> {
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Text(" Desire Product",
@@ -90,7 +84,7 @@ class HomeState extends State<Home> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          padding: EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 20),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Container(
@@ -107,7 +101,7 @@ class HomeState extends State<Home> {
                     color: Constants.primaryColor,
                     size: 25,
                   ),
-                  Text(
+                  const Text(
                     "search item...",
                     style: TextStyle(
                       color: Colors.grey,
@@ -120,14 +114,14 @@ class HomeState extends State<Home> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 30),
-                Text(
+                const SizedBox(height: 30),
+                const Text(
                   'Categories',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(2),
                   height: 40,
                   width: MediaQuery.of(context).size.width,
                   child: ListView.separated(
@@ -135,12 +129,13 @@ class HomeState extends State<Home> {
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
                         setState(() {
+                          initial = categoriesId[index];
                           indexCategory = indexList[index];
-                          category = indexList[index];
+                          category = categories[index];
                         });
                       },
                       child: Container(
-                        padding: EdgeInsets.all(3),
+                        padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Constants.thirdColor,
@@ -154,22 +149,22 @@ class HomeState extends State<Home> {
                       ),
                     ),
                     separatorBuilder: (BuildContext context, int index) =>
-                        SizedBox(
+                        const SizedBox(
                       width: 10,
                     ),
                     itemCount: categories.length,
                   ),
                 ),
-                SizedBox(height: 30),
-                Text(
+                const SizedBox(height: 30),
+                const Text(
                   'Products',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 FutureBuilder<Lists>(
-                    future: Api().ApiData(),
+                    future: Api().ApiData(initial),
                     builder: (context, snapshot) {
-                      if (snapshot.hasData)
+                      if (snapshot.hasData) {
                         return Container(
                             height: 400,
                             child: GridView.builder(
@@ -186,32 +181,29 @@ class HomeState extends State<Home> {
                                       onTap: () => Navigator.of(context)
                                           .push(MaterialPageRoute(
                                         builder: (context) => DetailsScreen(
-                                          snapshot.data!.products[index].id,
-                                          snapshot
-                                              .data!.products[index].imageUrl,
-                                          snapshot.data!.products[index].name,
-                                          /* snapshot.data!.products[index].price
-                                              .current.text,*/
-                                          /* snapshot.data!.products[index]
-                                              .productType,*/
-                                          snapshot
-                                              .data!.products[index].brandName,
-                                          snapshot.data!.products[index]
-                                              .colourWayId,
-                                          snapshot.data!.products[index].colour,
-                                          /* snapshot.data!.products[index]
-                                              .productCode,
-                                          snapshot.data!.products[index]
-                                              .isSellingFast,
-                                           snapshot.data!.products[index]
-                                              .hasVariantColours,
-                                          snapshot.data!.products[index]
-                                              .hasMultiplePrices,*/
-                                        ),
+                                            snapshot.data!.products[index].id,
+                                            snapshot.data!.products[index].name,
+                                            snapshot
+                                                .data!.products[index].imageUrl,
+                                            snapshot.data!.products[index]
+                                                .brandName,
+                                            snapshot
+                                                .data!.products[index].colour,
+                                            snapshot.data!.products[index]
+                                                .colourWayId,
+                                            snapshot.data!.products[index].price
+                                                .current.value),
                                       )),
                                       child: Hero(
                                         tag: 'photo$index',
                                         child: Container(
+                                          alignment: Alignment.center,
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: Constants.thirdColor,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -230,22 +222,17 @@ class HomeState extends State<Home> {
                                                       BorderRadius.circular(15),
                                                   image: DecorationImage(
                                                       image: NetworkImage(
-                                                          "http://" +
-                                                              snapshot
-                                                                  .data!
-                                                                  .products[
-                                                                      index]
-                                                                  .imageUrl),
+                                                          "http://${snapshot.data!.products[index].imageUrl}"),
                                                       fit: BoxFit.contain),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               Text(
                                                 snapshot
                                                     .data!.products[index].name,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
                                                         FontWeight.bold),
@@ -263,8 +250,8 @@ class HomeState extends State<Home> {
                                                             .data!
                                                             .products[index]
                                                             .brandName,
-                                                        style: TextStyle(
-                                                            fontSize: 10,
+                                                        style: const TextStyle(
+                                                            fontSize: 15,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: Colors.grey),
@@ -276,8 +263,8 @@ class HomeState extends State<Home> {
                                                             .price
                                                             .current
                                                             .text,
-                                                        style: TextStyle(
-                                                            fontSize: 10,
+                                                        style: const TextStyle(
+                                                            fontSize: 15,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: Colors.grey),
@@ -287,58 +274,6 @@ class HomeState extends State<Home> {
                                                   Container(
                                                     height: 35,
                                                     width: 35,
-                                                    child: Center(
-                                                      child: IconButton(
-                                                        icon: Icon(
-                                                          Icons.favorite,
-                                                          size: 15,
-                                                          color: Colors.white,
-                                                        ),
-                                                        onPressed: () async {
-                                                          await FavDataProvider
-                                                              .instance
-                                                              .insert(
-                                                                  DataBaseModel(
-                                                            id: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .id,
-                                                            name: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .name,
-                                                            imageUrl: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .imageUrl,
-                                                            colour: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .colour,
-                                                            colourWayId: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .colourWayId,
-                                                            brandName: snapshot
-                                                                .data!
-                                                                .products[index]
-                                                                .brandName,
-                                                          ));
-                                                          /*  Navigator.of(context)
-                                                              .pushNamed(
-                                                                  'FavouriteScreen',
-                                                                  arguments: {
-                                                                'price': snapshot
-                                                                    .data!
-                                                                    .products[
-                                                                        index]
-                                                                    .price
-                                                                    .current
-                                                                    .text
-                                                              });*/
-                                                        },
-                                                      ),
-                                                    ),
                                                     decoration: BoxDecoration(
                                                       color: Constants
                                                           .primaryColor,
@@ -346,13 +281,9 @@ class HomeState extends State<Home> {
                                                           BorderRadius.circular(
                                                               5),
                                                     ),
-                                                  ),
-                                                  Container(
-                                                    height: 35,
-                                                    width: 35,
                                                     child: Center(
                                                       child: IconButton(
-                                                        icon: Icon(
+                                                        icon: const Icon(
                                                           Icons.add,
                                                           size: 15,
                                                           color: Colors.white,
@@ -386,52 +317,33 @@ class HomeState extends State<Home> {
                                                                 .data!
                                                                 .products[index]
                                                                 .brandName,
+                                                            price: snapshot
+                                                                .data!
+                                                                .products[index]
+                                                                .price
+                                                                .current
+                                                                .value,
                                                           ));
-                                                          /* Navigator.of(context)
-                                                              .pushNamed(
-                                                                  'CartScreen',
-                                                                  arguments: {
-                                                                'price': snapshot
-                                                                    .data!
-                                                                    .products[
-                                                                        index]
-                                                                    .price
-                                                                    .current
-                                                                    .text
-                                                              });*/
                                                         },
                                                       ),
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      color: Constants
-                                                          .primaryColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
                                                     ),
                                                   )
                                                 ],
                                               )
                                             ],
                                           ),
-                                          alignment: Alignment.center,
-                                          padding: EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            color: Constants.thirdColor,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
                                         ),
                                       ),
                                     ));
                               },
                               gridDelegate:
-                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                  const SliverGridDelegateWithMaxCrossAxisExtent(
                                       maxCrossAxisExtent: 200,
                                       crossAxisSpacing: 20,
                                       childAspectRatio: 3 / 4,
                                       mainAxisSpacing: 20),
                             ));
+                      }
                       if (snapshot.hasError) {
                         print(snapshot.error!);
                         return Container(

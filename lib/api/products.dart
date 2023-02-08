@@ -42,6 +42,7 @@ class Product {
     this.colourWayId = map['colourWayId'];
     this.hasMultiplePrices = map['hasMultiplePrices'];
     this.hasVariantColours = map['hasVariantColours'];
+
     this.imageUrl = map['imageUrl'];
     this.isSellingFast = map['isSellingFast'];
     this.productCode = map['productCode'];

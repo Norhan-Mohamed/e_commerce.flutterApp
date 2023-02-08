@@ -3,18 +3,15 @@ import 'package:e_commerce/screens/constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../network/cartDatabase.dart';
-import '../details/details.dart';
+import '../../network/favDatabase.dart';
 
 class CartScreen extends StatefulWidget {
-  //late var category;
-
   State<CartScreen> createState() => CartScreenState();
 }
 
 class CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    // widget.price = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -35,100 +32,139 @@ class CartScreenState extends State<CartScreen> {
               print(snapshot.error.toString());
             }
             if (snapshot.hasData) {
-              return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    print(snapshot.data![index].name);
-                    return Flexible(
-                      child: Container(
-                          color: Constants.thirdColor,
-                          padding: const EdgeInsets.all(8),
-                          child: Center(
-                            child: Row(
+              return GridView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  print(snapshot.data![index].name);
+                  return Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Constants.thirdColor,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 150,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Constants.secondryColor,
+                                    width: 3,
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15.0))),
+                              child: Image.network(
+                                "http://${snapshot.data![index].imageUrl}",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              snapshot.data![index].name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0),
+                              child: Text(
+                                "Brand name: " +
+                                    snapshot.data![index].brandName,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                softWrap: false,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 15),
+                              ),
+                            ),
+                            Text(
+                              "price \$" +
+                                  snapshot.data![index].price.toString(),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                IconButton(
-                                  iconSize: 100,
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => DetailsScreen(
-                                                  snapshot.data![index].id,
-                                                  snapshot
-                                                      .data![index].imageUrl,
-                                                  snapshot.data![index].name,
-                                                  snapshot
-                                                      .data![index].brandName,
-                                                  snapshot
-                                                      .data![index].colourWayId,
-
-                                                  snapshot.data![index].colour,
-                                                  //  widget.category
-                                                )));
-                                  },
-                                  icon: Container(
-                                    decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15.0))),
-                                    child: Image.network(
-                                      "http://${snapshot.data![index].imageUrl}",
-                                      fit: BoxFit.fill,
+                                Container(
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                    color: Constants.primaryColor,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Center(
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.favorite,
+                                        size: 15,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () async {
+                                        await FavDataProvider.instance
+                                            .insert(DataBaseModel(
+                                          id: snapshot.data![index].id,
+                                          name: snapshot.data![index].name,
+                                          imageUrl:
+                                              snapshot.data![index].imageUrl,
+                                          colour: snapshot.data![index].colour,
+                                          colourWayId:
+                                              snapshot.data![index].colourWayId,
+                                          brandName:
+                                              snapshot.data![index].brandName,
+                                          price: snapshot.data![index].price,
+                                        ));
+                                      },
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 20,
+                                Container(
+                                  height: 35,
+                                  width: 35,
+                                  child: IconButton(
+                                      onPressed: () async {
+                                        await CartDataProvider.instance.delete(
+                                            snapshot.data![index].id!.toInt());
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                        size: 20,
+                                      )),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Constants.secondryColor),
                                 ),
-                                Column(children: [
-                                  Text(
-                                    snapshot.data![index].name,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15),
-                                  ),
-                                  Text(
-                                    snapshot.data![index].brandName,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15),
-                                  ),
-                                  /*  Text(
-                                    widget.price.toString(),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15),
-                                  )*/
-                                ]),
-                                SizedBox(
-                                  width: 100,
-                                ),
-                                IconButton(
-                                    onPressed: () async {
-                                      await CartDataProvider.instance
-                                          .delete(snapshot.data![index].id);
-                                    },
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: Color(0xff0c9173),
-                                      size: 20,
-                                    )),
                               ],
                             ),
-                          )),
-                    );
-                  });
+                          ],
+                        ),
+                      ));
+                },
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 250,
+                    crossAxisSpacing: 20,
+                    childAspectRatio: 3 / 4,
+                    mainAxisSpacing: 20),
+              );
             }
             return Center(
               child: Container(
