@@ -30,8 +30,6 @@ class Details {
     this.isInStock = map["isInStock"];
 
     this.price = [];
-
-    print('-----1-1--1');
   }
 
   Map<String, dynamic> toMap() {
