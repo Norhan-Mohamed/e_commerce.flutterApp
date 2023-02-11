@@ -98,66 +98,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  height: 30,
-                                  width: 30,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Center(
-                                    child: Center(
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.minimize,
-                                          size: 15,
-                                          color: Colors.black,
-                                        ),
-                                        onPressed: () {},
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  height: 30,
-                                  width: 30,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(
-                                        color: Constants.secondryColor,
-                                        width: 3,
-                                      )),
-                                  child: Center(child: Text('1')),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  height: 30,
-                                  width: 30,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Center(
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.add,
-                                        size: 15,
-                                        color: Colors.black,
-                                      ),
-                                      onPressed: () {},
-                                    ),
+                                Text(
+                                  "Price",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
                                   ),
                                 ),
                                 const SizedBox(
-                                  width: 200,
+                                  width: 10,
                                 ),
                                 Text(
                                   "${widget.price}\$",
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w600,
                                     color: Colors.black,
                                   ),
                                 ),

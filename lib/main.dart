@@ -28,10 +28,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  //late var category;
-  //late Map? price;
   MyHomePage({
-    super.key, // this.price // this.category
+    super.key,
   });
 
   @override
@@ -39,12 +37,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  /* static Map? Pp;
-  void initState() {
-    Pp = widget.price;
-    super.initState();
-  }
-*/
   List<Map<String, dynamic>> _pages = [
     {'page': Home(), 'title': 'Home'},
     {'page': CartScreen(), 'title': 'Cart'},
@@ -59,9 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //  widget.price = ModalRoute.of(context)!.settings.arguments as Map;
-    // widget.category =
-    //   ModalRoute.of(context)!.settings.arguments as Map<String, int>;
     return Scaffold(
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(

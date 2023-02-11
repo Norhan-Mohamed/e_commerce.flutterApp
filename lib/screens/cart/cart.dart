@@ -10,6 +10,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class CartScreenState extends State<CartScreen> {
+  int counter = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +104,77 @@ class CartScreenState extends State<CartScreen> {
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Center(
+                                    child: Center(
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.minimize,
+                                          size: 15,
+                                          color: Colors.black,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            counter--;
+                                            if (counter <= 1) {
+                                              counter = 1;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                        color: Constants.secondryColor,
+                                        width: 1,
+                                      )),
+                                  child: Center(
+                                    child: Text(counter.toString()),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Center(
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.add,
+                                        size: 15,
+                                        color: Colors.black,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          counter++;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
                                 Container(
                                   height: 35,
                                   width: 35,
@@ -141,8 +212,72 @@ class CartScreenState extends State<CartScreen> {
                                   width: 35,
                                   child: IconButton(
                                       onPressed: () async {
-                                        await CartDataProvider.instance.delete(
-                                            snapshot.data![index].id!.toInt());
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                  'Do You Want To Delete This Item ?',
+                                                  style: TextStyle(
+                                                    color:
+                                                        Constants.secondryColor,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        shape:
+                                                            const StadiumBorder(),
+                                                        foregroundColor:
+                                                            Constants
+                                                                .primaryColor,
+                                                        backgroundColor:
+                                                            Constants
+                                                                .secondryColor),
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        shape:
+                                                            const StadiumBorder(),
+                                                        foregroundColor:
+                                                            Constants
+                                                                .primaryColor,
+                                                        backgroundColor:
+                                                            Constants
+                                                                .primaryColor),
+                                                    onPressed: () async {
+                                                      await CartDataProvider
+                                                          .instance
+                                                          .delete(snapshot.data!
+                                                              .elementAt(index)
+                                                              .id!
+                                                              .toInt());
+                                                      Navigator.pop(context);
+                                                      setState(() {});
+                                                    },
+                                                    child: const Text(
+                                                      'Yes',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            });
                                       },
                                       icon: Icon(
                                         Icons.delete,

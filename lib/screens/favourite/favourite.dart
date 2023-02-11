@@ -89,8 +89,66 @@ class FavouriteScreenState extends State<FavouriteScreen> {
                               ),
                               IconButton(
                                   onPressed: () async {
-                                    await FavDataProvider.instance.delete(
-                                        snapshot.data![index].id!.toInt());
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              'Do You Want To Delete This Item ?',
+                                              style: TextStyle(
+                                                color: Constants.secondryColor,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            actions: [
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    shape:
+                                                        const StadiumBorder(),
+                                                    foregroundColor:
+                                                        Constants.primaryColor,
+                                                    backgroundColor: Constants
+                                                        .secondryColor),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  'Cancel',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    shape:
+                                                        const StadiumBorder(),
+                                                    foregroundColor:
+                                                        Constants.primaryColor,
+                                                    backgroundColor:
+                                                        Constants.primaryColor),
+                                                onPressed: () async {
+                                                  await FavDataProvider.instance
+                                                      .delete(snapshot.data!
+                                                          .elementAt(index)
+                                                          .id!
+                                                          .toInt());
+                                                  Navigator.pop(context);
+                                                  setState(() {});
+                                                },
+                                                child: const Text(
+                                                  'Yes',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        });
                                   },
                                   icon: Icon(
                                     Icons.delete,
